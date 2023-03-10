@@ -18,7 +18,7 @@ namespace AquariumLive
         private int _currentAge;
         private int _maxAge;
         private ConsoleColor _color;
-        private static int _ids = 0;
+        private static int _ids = 0; //?
         private int _idCount = 1;
 
         public Fish(int maxSecondTimeLife, ConsoleColor color)
@@ -87,39 +87,38 @@ namespace AquariumLive
 
             while (isWork)
             {
-                Console.SetCursorPosition(0,menuInfoPosition);
+                Console.SetCursorPosition(0, menuInfoPosition);
                 Console.WriteLine(
                     $"| [{CommandAddFish}] Добавить рыбку  \n| [{CommandDeleteFish}] Удалить рыбку \n| [{CommandExitProgram}] Выйти из Программы |");
-                Console.SetCursorPosition(0,0);
                 
+                if (Console.KeyAvailable)
+                {
+                    ConsoleKey key = Console.ReadKey(true).Key;
+
+                    switch (key)
+                    {
+                        case CommandAddFish:
+                            AddFish();
+                            break;
+
+                        case CommandDeleteFish:
+                            DeleteFish();
+                            break;
+
+                        case CommandExitProgram:
+                            isWork = false;
+                            break;
+                    }
+
+                    Console.SetCursorPosition(0, 0);
+                }
                 
                 if (delitaTime == oneSecond)
                 {
                     Console.Clear();
                     ShowInfoFishes();
                     delitaTime = 0;
-
                     UnitAge();
-
-                    if (Console.KeyAvailable)
-                    {
-                        ConsoleKey key = Console.ReadKey(true).Key;
-
-                        switch (key)
-                        {
-                            case CommandAddFish:
-                                AddFish();
-                                break;
-
-                            case CommandDeleteFish:
-                                DeleteFish();
-                                break;
-
-                            case CommandExitProgram:
-                                isWork = false;
-                                break;
-                        }
-                    }
                 }
                 else
                 {
