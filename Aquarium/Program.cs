@@ -70,7 +70,7 @@ namespace AquariumLive
             const int PositionTopMenuInfo = 15;
             
             int deltaTime = 0;
-            int growTime = 1000;
+            int growTime = 100;
             const int waitingTime = 1;
             bool isWork = true;
 
