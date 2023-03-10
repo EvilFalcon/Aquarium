@@ -7,6 +7,7 @@ namespace AquariumLive
     {
         static void Main()
         {
+            Console.CursorVisible = false;
             Aquarium aquarium = new Aquarium();
             aquarium.StartLife();
         }
@@ -37,6 +38,7 @@ namespace AquariumLive
 
         public void ShowInfo()
         {
+            ConsoleColor defaultColor = ConsoleColor.White;
             string status = "";
 
             if (IsALife)
@@ -51,6 +53,7 @@ namespace AquariumLive
             Console.ForegroundColor = _color;
 
             Console.WriteLine($"|Рыбка под номером {UniqueNumber}|Время жизни  {_currentAge}|Статус рыбки {status}|");
+            Console.ForegroundColor = defaultColor;
         }
     }
 
@@ -73,16 +76,23 @@ namespace AquariumLive
             int delitaTime = 0;
             int oneSecond = 100;
             int oneMiliseconds = 1;
+            int menuInfoPosition = 15;
             bool isWork = true;
 
             const ConsoleKey CommandAddFish = ConsoleKey.NumPad1;
             const ConsoleKey CommandDeleteFish = ConsoleKey.Delete;
             const ConsoleKey CommandExitProgram = ConsoleKey.Escape;
-            
+
             ShowInfoFishes();
 
             while (isWork)
             {
+                Console.SetCursorPosition(0,menuInfoPosition);
+                Console.WriteLine(
+                    $"| [{CommandAddFish}] Добавить рыбку  \n| [{CommandDeleteFish}] Удалить рыбку \n| [{CommandExitProgram}] Выйти из Программы |");
+                Console.SetCursorPosition(0,0);
+                
+                
                 if (delitaTime == oneSecond)
                 {
                     Console.Clear();
@@ -100,11 +110,11 @@ namespace AquariumLive
                             case CommandAddFish:
                                 AddFish();
                                 break;
-                            
+
                             case CommandDeleteFish:
                                 DeleteFish();
                                 break;
-                            
+
                             case CommandExitProgram:
                                 isWork = false;
                                 break;
@@ -137,22 +147,22 @@ namespace AquariumLive
         {
             Console.WriteLine("введите номер рыбки чтобы ее удалить");
             int id = GetId();
-            
+
             _fishes.RemoveAt(id);
         }
 
         private int GetId()
         {
             int result;
-            
-            while (int.TryParse(Console.ReadLine(),out result)==false&&result>0&&result<=_fishes.Count)
+
+            while (int.TryParse(Console.ReadLine(), out result) == false && result > 0 && result <= _fishes.Count)
             {
                 Console.WriteLine("неверный ввод");
             }
 
-            return result-1;
+            return result - 1;
         }
-        
+
         private void UnitAge()
         {
             foreach (Fish fish in _fishes)
@@ -180,7 +190,7 @@ namespace AquariumLive
             {
                 ConsoleColor.Blue, ConsoleColor.Magenta, ConsoleColor.Red, ConsoleColor.Yellow, ConsoleColor.DarkYellow
             };
-            int maxSecondTimeLife =  60;
+            int maxSecondTimeLife = 60;
             int minSecondTimeLife = 10;
             int _secondTimeLife = random.Next(minSecondTimeLife, maxSecondTimeLife + 1);
 
