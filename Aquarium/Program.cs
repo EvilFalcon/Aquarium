@@ -58,13 +58,13 @@ namespace AquariumLive
     {
         private List<Fish> _fishes = new List<Fish>();
         private int _maxCountFishe = 10;
-        private CreatorFish creatorFish = new CreatorFish();
+        private CreatorFish _creatorFish = new CreatorFish();
 
         public Aquarium()
         {
             for (int i = 0; i < _maxCountFishe; i++)
             {
-                _fishes.Add(creatorFish.Creator());
+                _fishes.Add(_creatorFish.Creator());
             }
         }
 
@@ -124,7 +124,7 @@ namespace AquariumLive
         {
             if (_maxCountFishe > _fishes.Count)
             {
-                _fishes.Add(creatorFish.Creator());
+                _fishes.Add(_creatorFish.Creator());
                 Console.WriteLine("вы добавили рыбку");
             }
             else
