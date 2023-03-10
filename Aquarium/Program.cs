@@ -15,21 +15,21 @@ namespace AquariumLive
 
     class Fish
     {
-        private int _currentAge;
-        private int _maxAge;
-        private ConsoleColor _color;
-        private static int _ids = 0; //?
-        private int _idCount = 1;
+        private readonly int _maxAge;
+        private readonly ConsoleColor _color;
 
-        public Fish(int maxSecondTimeLife, ConsoleColor color)
+        private int _currentAge;
+
+        public Fish(int maxAge, ConsoleColor color, int id)
         {
-            _maxAge = maxSecondTimeLife;
+            _maxAge = maxAge;
             _color = color;
-            UniqueNumber = ++_ids;
+            Id = id;
         }
 
-        public bool IsALife => _currentAge <= _maxAge;
-        public int UniqueNumber { get; }
+        private string Status => IsAlive ? "Жива" : "Умерла";
+        private bool IsAlive => _currentAge <= _maxAge;
+        public int Id { get; }
 
         public void AddUnitAge()
         {
@@ -39,20 +39,11 @@ namespace AquariumLive
         public void ShowInfo()
         {
             ConsoleColor defaultColor = ConsoleColor.White;
-            string status = "";
-
-            if (IsALife)
-            {
-                status = "жива";
-            }
-            else
-            {
-                status = "Умерла";
-            }
 
             Console.ForegroundColor = _color;
 
-            Console.WriteLine($"|Рыбка под номером {UniqueNumber}|Время жизни  {_currentAge}|Статус рыбки {status}|");
+            Console.WriteLine(
+                $"|Рыбка под номером {Id,5}|Время жизни  {_currentAge,5}|Статус рыбки {Status,5}|");
             Console.ForegroundColor = defaultColor;
         }
     }
@@ -60,37 +51,36 @@ namespace AquariumLive
     class Aquarium
     {
         private List<Fish> _fishes = new List<Fish>();
-        private int _maxCountFishe = 10;
+        private int _maxFishesCount = 10;
         private CreatorFish _creatorFish = new CreatorFish();
 
         public Aquarium()
         {
-            for (int i = 0; i < _maxCountFishe; i++)
+            for (int i = 0; i < _maxFishesCount; i++)
             {
-                _fishes.Add(_creatorFish.Creator());
+                _fishes.Add(_creatorFish.Create());
             }
         }
 
         public void StartLife()
         {
-            int delitaTime = 0;
-            int oneSecond = 100;
-            int oneMiliseconds = 1;
-            int menuInfoPosition = 15;
-            bool isWork = true;
-
             const ConsoleKey CommandAddFish = ConsoleKey.NumPad1;
             const ConsoleKey CommandDeleteFish = ConsoleKey.Delete;
             const ConsoleKey CommandExitProgram = ConsoleKey.Escape;
+            const int PositionTopMenuInfo = 15;
+            
+            int deltaTime = 0;
+            int growTime = 1000;
+            const int waitingTime = 1;
+            bool isWork = true;
 
-            ShowInfoFishes();
 
             while (isWork)
             {
-                Console.SetCursorPosition(0, menuInfoPosition);
+                Console.SetCursorPosition(0, PositionTopMenuInfo);
                 Console.WriteLine(
-                    $"| [{CommandAddFish}] Добавить рыбку  \n| [{CommandDeleteFish}] Удалить рыбку \n| [{CommandExitProgram}] Выйти из Программы |");
-                
+                    $"| [{CommandAddFish}] Добавить рыбку  |\n| [{CommandDeleteFish}] Удалить рыбку |\n| [{CommandExitProgram}] Выйти из Программы |");
+
                 if (Console.KeyAvailable)
                 {
                     ConsoleKey key = Console.ReadKey(true).Key;
@@ -109,31 +99,31 @@ namespace AquariumLive
                             isWork = false;
                             break;
                     }
-
-                    Console.SetCursorPosition(0, 0);
                 }
-                
-                if (delitaTime == oneSecond)
+
+                Console.SetCursorPosition(0, 0);
+                ShowFishesInfo();
+
+                Thread.Sleep(waitingTime);
+
+                if (deltaTime == growTime)
                 {
                     Console.Clear();
-                    ShowInfoFishes();
-                    delitaTime = 0;
-                    UnitAge();
+                    deltaTime = 0;
+                    GrowOld();
                 }
                 else
                 {
-                    ++delitaTime;
+                    deltaTime++;
                 }
-
-                Thread.Sleep(oneMiliseconds);
             }
         }
 
         private void AddFish()
         {
-            if (_maxCountFishe > _fishes.Count)
+            if (_maxFishesCount > _fishes.Count)
             {
-                _fishes.Add(_creatorFish.Creator());
+                _fishes.Add(_creatorFish.Create());
                 Console.WriteLine("вы добавили рыбку");
             }
             else
@@ -149,7 +139,7 @@ namespace AquariumLive
 
             for (int i = 0; i < _fishes.Count; i++)
             {
-                if (_fishes[i].UniqueNumber == id)
+                if (_fishes[i].Id == id)
                 {
                     _fishes.Remove(_fishes[i]);
                 }
@@ -168,7 +158,7 @@ namespace AquariumLive
             return result;
         }
 
-        private void UnitAge()
+        private void GrowOld() //&
         {
             foreach (Fish fish in _fishes)
             {
@@ -176,7 +166,7 @@ namespace AquariumLive
             }
         }
 
-        private void ShowInfoFishes()
+        private void ShowFishesInfo()
         {
             foreach (Fish fish in _fishes)
             {
@@ -187,19 +177,18 @@ namespace AquariumLive
 
     class CreatorFish
     {
-        public Fish Creator()
+        private int _id;
+
+        public Fish Create()
         {
             Random random = new Random();
 
-            List<ConsoleColor> _color = new List<ConsoleColor>()
-            {
-                ConsoleColor.Blue, ConsoleColor.Magenta, ConsoleColor.Red, ConsoleColor.Yellow, ConsoleColor.DarkYellow
-            };
-            int maxSecondTimeLife = 60;
-            int minSecondTimeLife = 10;
-            int _secondTimeLife = random.Next(minSecondTimeLife, maxSecondTimeLife + 1);
+            int maxAge = 60;
+            int minAge = 10;
+            int maxFishAge = random.Next(minAge, maxAge + 1);
 
-            return new Fish(_secondTimeLife, _color[random.Next(_color.Count)]);
+            return new Fish(maxFishAge, (ConsoleColor)random.Next(1, Enum.GetValues(typeof(ConsoleColor)).Length),
+                _id++);
         }
     }
 }
