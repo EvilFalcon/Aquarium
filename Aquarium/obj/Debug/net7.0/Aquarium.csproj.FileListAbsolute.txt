@@ -1,0 +1,15 @@
+P:\директория гит\Aquarium\Aquarium\bin\Debug\net7.0\Aquarium.exe
+P:\директория гит\Aquarium\Aquarium\bin\Debug\net7.0\Aquarium.deps.json
+P:\директория гит\Aquarium\Aquarium\bin\Debug\net7.0\Aquarium.runtimeconfig.json
+P:\директория гит\Aquarium\Aquarium\bin\Debug\net7.0\Aquarium.dll
+P:\директория гит\Aquarium\Aquarium\bin\Debug\net7.0\Aquarium.pdb
+P:\директория гит\Aquarium\Aquarium\obj\Debug\net7.0\Aquarium.csproj.AssemblyReference.cache
+P:\директория гит\Aquarium\Aquarium\obj\Debug\net7.0\Aquarium.GeneratedMSBuildEditorConfig.editorconfig
+P:\директория гит\Aquarium\Aquarium\obj\Debug\net7.0\Aquarium.AssemblyInfoInputs.cache
+P:\директория гит\Aquarium\Aquarium\obj\Debug\net7.0\Aquarium.AssemblyInfo.cs
+P:\директория гит\Aquarium\Aquarium\obj\Debug\net7.0\Aquarium.csproj.CoreCompileInputs.cache
+P:\директория гит\Aquarium\Aquarium\obj\Debug\net7.0\Aquarium.dll
+P:\директория гит\Aquarium\Aquarium\obj\Debug\net7.0\refint\Aquarium.dll
+P:\директория гит\Aquarium\Aquarium\obj\Debug\net7.0\Aquarium.pdb
+P:\директория гит\Aquarium\Aquarium\obj\Debug\net7.0\Aquarium.genruntimeconfig.cache
+P:\директория гит\Aquarium\Aquarium\obj\Debug\net7.0\ref\Aquarium.dll
