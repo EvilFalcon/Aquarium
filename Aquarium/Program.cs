@@ -148,19 +148,25 @@ namespace AquariumLive
             Console.WriteLine("введите номер рыбки чтобы ее удалить");
             int id = GetId();
 
-            _fishes.RemoveAt(id);
+            for (int i = 0; i < _fishes.Count; i++)
+            {
+                if (_fishes[i].UniqueNumber == id)
+                {
+                    _fishes.Remove(_fishes[i]);
+                }
+            }
         }
 
         private int GetId()
         {
             int result;
 
-            while (int.TryParse(Console.ReadLine(), out result) == false && result > 0 && result <= _fishes.Count)
+            while (int.TryParse(Console.ReadLine(), out result) == false && result > 0)
             {
                 Console.WriteLine("неверный ввод");
             }
 
-            return result - 1;
+            return result;
         }
 
         private void UnitAge()
