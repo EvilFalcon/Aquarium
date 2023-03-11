@@ -68,10 +68,10 @@ namespace AquariumLive
             const ConsoleKey CommandDeleteFish = ConsoleKey.Delete;
             const ConsoleKey CommandExitProgram = ConsoleKey.Escape;
             const int PositionTopMenuInfo = 15;
+            const int waitingTime = 1;
             
             int deltaTime = 0;
             int growTime = 100;
-            const int waitingTime = 1;
             bool isWork = true;
 
 
@@ -158,7 +158,7 @@ namespace AquariumLive
             return result;
         }
 
-        private void GrowOld() //&
+        private void GrowOld() 
         {
             foreach (Fish fish in _fishes)
             {
