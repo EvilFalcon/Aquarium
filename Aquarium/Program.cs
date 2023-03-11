@@ -56,11 +56,9 @@ namespace AquariumLive
 
         public Aquarium()
         {
-            for (int i = 0; i < _maxFishesCount; i++)
-            {
-                _fishes.Add(_creatorFish.Create());
-            }
+            InsertFishes();
         }
+
 
         public void StartLife()
         {
@@ -145,6 +143,14 @@ namespace AquariumLive
                 }
             }
         }
+        
+        private void InsertFishes()
+        {
+            for (int i = 0; i < _maxFishesCount; i++)
+            {
+                _fishes.Add(_creatorFish.Create());
+            }
+        }
 
         private int GetId()
         {
@@ -178,16 +184,20 @@ namespace AquariumLive
     class CreatorFish
     {
         private int _id;
+        Array _colors = Enum.GetValues(typeof(ConsoleColor));
 
+        
         public Fish Create()
         {
+            const int FirstColor = 1;
+            
             Random random = new Random();
 
             int maxAge = 60;
             int minAge = 10;
             int maxFishAge = random.Next(minAge, maxAge + 1);
 
-            return new Fish(maxFishAge, (ConsoleColor)random.Next(1, Enum.GetValues(typeof(ConsoleColor)).Length),
+            return new Fish(maxFishAge, (ConsoleColor)random.Next(FirstColor,_colors.Length ),
                 _id++);
         }
     }
